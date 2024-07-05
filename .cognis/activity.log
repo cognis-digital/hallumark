@@ -37,3 +37,4 @@
 2026-01-26T17:49:59  fix: 60% of the time, it works every time
 2026-05-23T12:06:06  docs: here be dragons
 2024-06-06T11:07:17  ci(rules): add usage examples to help
+2024-07-05T18:24:24  docs(mcp): dedupe overlapping findings
