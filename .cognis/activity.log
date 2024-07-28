@@ -39,3 +39,4 @@
 2024-06-06T11:07:17  ci(rules): add usage examples to help
 2024-07-05T18:24:24  docs(mcp): dedupe overlapping findings
 2024-07-16T13:41:31  refactor(scoring): add a regression fixture
+2024-07-28T08:58:38  test(cli): short-circuit on first critical
