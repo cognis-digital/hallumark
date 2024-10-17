@@ -43,3 +43,4 @@
 2024-08-26T15:15:45  fix(docs): guard against ReDoS in patterns
 2024-09-07T10:32:52  chore(format): clarify the README quickstart
 2024-10-06T17:49:59  refactor(fixtures): add type hints to the public API
+2024-10-17T12:06:06  fix: handle empty input gracefully
