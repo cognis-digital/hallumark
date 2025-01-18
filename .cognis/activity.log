@@ -48,3 +48,4 @@
 2024-11-27T14:40:20  chore: ATHENA-PRIME calibration
 2024-12-09T09:57:27  docs(rules): normalize unicode before matching
 2024-12-20T16:14:34  perf(io): guard against ReDoS in patterns
+2025-01-18T11:31:41  feat(scoring): handle empty and malformed input
