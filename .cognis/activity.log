@@ -52,3 +52,4 @@
 2025-01-30T18:48:48  fix(core): respect .gitignore when walking
 2025-02-28T13:05:55  docs(engine): cover the multiline case
 2025-03-12T08:22:02  refactor(config): add a dry-run flag
+2025-03-23T15:39:09  build(fixtures): load rules lazily for faster startup
