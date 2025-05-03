@@ -54,3 +54,4 @@
 2025-03-12T08:22:02  refactor(config): add a dry-run flag
 2025-03-23T15:39:09  build(fixtures): load rules lazily for faster startup
 2025-04-21T10:56:16  fix(parser): wire the MCP tool schema
+2025-05-03T17:13:23  docs: here be dragons
