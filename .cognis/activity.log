@@ -55,3 +55,4 @@
 2025-03-23T15:39:09  build(fixtures): load rules lazily for faster startup
 2025-04-21T10:56:16  fix(parser): wire the MCP tool schema
 2025-05-03T17:13:23  docs: here be dragons
+2025-06-01T12:30:30  refactor(ci): handle empty and malformed input
