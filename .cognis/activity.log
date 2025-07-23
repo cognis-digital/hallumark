@@ -58,3 +58,4 @@
 2025-06-01T12:30:30  refactor(ci): handle empty and malformed input
 2025-06-13T19:47:37  docs: clarify usage notes
 2025-06-24T14:04:44  feat(io): lower memory on big inputs
+2025-07-23T09:21:51  chore(tests): improve error messages with context
