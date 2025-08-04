@@ -59,3 +59,4 @@
 2025-06-13T19:47:37  docs: clarify usage notes
 2025-06-24T14:04:44  feat(io): lower memory on big inputs
 2025-07-23T09:21:51  chore(tests): improve error messages with context
+2025-08-04T16:38:58  refactor(docs): load rules lazily for faster startup
