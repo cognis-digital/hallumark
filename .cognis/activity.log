@@ -61,3 +61,4 @@
 2025-07-23T09:21:51  chore(tests): improve error messages with context
 2025-08-04T16:38:58  refactor(docs): load rules lazily for faster startup
 2025-09-02T11:55:05  ci(engine): stream large files without buffering
+2025-09-14T18:12:12  feat(output): skip binary files by sniffing
