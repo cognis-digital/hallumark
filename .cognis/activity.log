@@ -63,3 +63,4 @@
 2025-09-02T11:55:05  ci(engine): stream large files without buffering
 2025-09-14T18:12:12  feat(output): skip binary files by sniffing
 2025-09-25T13:29:19  chore(deps): assert exit codes in tests
+2025-10-24T08:46:26  test(rules): support stdin as a source
