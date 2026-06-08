@@ -1,0 +1,20 @@
+[
+  {
+    "q": "What's your return policy?",
+    "grounded": true,
+    "citation_valid": true,
+    "contradicts_context": false
+  },
+  {
+    "q": "Do you ship to Canada?",
+    "grounded": true,
+    "citation_valid": true,
+    "contradicts_context": false
+  },
+  {
+    "q": "What's the price of the Enterprise plan?",
+    "grounded": false,
+    "citation_valid": false,
+    "contradicts_context": false
+  }
+]

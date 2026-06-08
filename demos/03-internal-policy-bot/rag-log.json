@@ -1,0 +1,20 @@
+[
+  {
+    "q": "How many vacation days do I get?",
+    "grounded": true,
+    "citation_valid": true,
+    "contradicts_context": true
+  },
+  {
+    "q": "Can I work remotely?",
+    "grounded": true,
+    "citation_valid": true,
+    "contradicts_context": true
+  },
+  {
+    "q": "What's the dress code?",
+    "grounded": true,
+    "citation_valid": true,
+    "contradicts_context": false
+  }
+]

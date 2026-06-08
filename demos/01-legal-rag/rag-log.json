@@ -1,0 +1,26 @@
+[
+  {
+    "q": "What does Section 230 protect?",
+    "grounded": true,
+    "citation_valid": true,
+    "contradicts_context": false
+  },
+  {
+    "q": "Can I sue for emotional distress?",
+    "grounded": false,
+    "citation_valid": false,
+    "contradicts_context": false
+  },
+  {
+    "q": "What's the statute of limitations in California?",
+    "grounded": true,
+    "citation_valid": false,
+    "contradicts_context": true
+  },
+  {
+    "q": "How do I file a small claims?",
+    "grounded": true,
+    "citation_valid": true,
+    "contradicts_context": false
+  }
+]

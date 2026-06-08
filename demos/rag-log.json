@@ -1,0 +1,20 @@
+[
+  {
+    "q": "What is Cognis?",
+    "grounded": false,
+    "citation_valid": false,
+    "contradicts_context": false
+  },
+  {
+    "q": "Pricing?",
+    "grounded": true,
+    "citation_valid": false,
+    "contradicts_context": false
+  },
+  {
+    "q": "SOC2?",
+    "grounded": true,
+    "citation_valid": true,
+    "contradicts_context": true
+  }
+]
