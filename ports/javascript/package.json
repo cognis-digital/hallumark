@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/hallumark",
+  "version": "0.2.0",
+  "description": "JavaScript port of hallumark (Cognis Neural Suite)",
+  "bin": {
+    "hallumark": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
