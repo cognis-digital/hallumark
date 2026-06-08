@@ -36,7 +36,11 @@ LLM hallucination & grounding auditor for RAG systems — without standing up he
 <a name="features"></a>
 ## Features
 
-- ✅ Scan
+- ✅ Split Claims
+- ✅ Audit Record
+- ✅ Audit Records
+- ✅ Load Records
+- ✅ Parse Records
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
