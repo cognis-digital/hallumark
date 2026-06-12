@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-hallumark
+pip install "git+https://github.com/cognis-digital/hallumark.git"
 hallumark scan .            # → prioritized findings in seconds
 ```
 
@@ -50,7 +50,7 @@ LLM hallucination & grounding auditor for RAG systems — without standing up he
 ## Quick start
 
 ```bash
-pip install cognis-hallumark
+pip install "git+https://github.com/cognis-digital/hallumark.git"
 hallumark --version
 hallumark scan .                       # scan current project
 hallumark scan . --format json         # machine-readable
