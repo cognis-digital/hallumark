@@ -89,7 +89,7 @@ def split_claims(answer: str) -> List[str]:
     for sent in _split_sentences(answer):
         for clause in _CLAUSE_SPLIT_RE.split(sent):
             clause = clause.strip(" .;,")
-            if len(_content_tokens(clause)) >= 2:
+            if len(_content_tokens(clause)) >= 1:
                 claims.append(clause)
     # Fallback: a short single-fact answer with no sentence punctuation.
     if not claims and answer and _content_tokens(answer):
@@ -215,6 +215,25 @@ def _score_claim(
 
     support = best_support
 
+    # Global coverage check: if the majority of the claim's content tokens are
+    # absent from ALL context combined, the claim introduces facts not grounded
+    # in any retrieved chunk (a hallucination of entities/facts).  Cap support
+    # below the pass threshold so such claims are always flagged.
+    if claim_tokens:
+        all_ctx_tokens: set = set()
+        for chunk in context_chunks:
+            all_ctx_tokens.update(_content_tokens(chunk))
+        global_cov = _overlap_coverage(claim_tokens, all_ctx_tokens)
+        if global_cov < 0.5:
+            # More than half the claim's terms are absent from the entire
+            # retrieved context — almost certainly a fabricated claim.
+            support = min(support * 0.3, 0.15)
+            if not reasons:
+                reasons.append(
+                    "most claim terms absent from retrieved context "
+                    "(possible entity/fact fabrication)"
+                )
+
     # Numeric consistency: any number in the claim must exist somewhere in ctx.
     if claim_nums:
         ctx_nums = set()
@@ -222,19 +241,24 @@ def _score_claim(
             ctx_nums.update(_numbers(chunk))
         missing = [n for n in claim_nums if n not in ctx_nums]
         if missing:
-            support *= 0.4
+            # A fabricated numeric value is a high-severity hallucination; cap
+            # the support well below any reasonable pass threshold so the claim
+            # is always flagged as unsupported.
+            support = min(support * 0.2, 0.15)
             reasons.append(
                 "numeric value(s) not found in context: " + ", ".join(sorted(set(missing)))
             )
 
     # Negation flip: claim negates but best-matching context does not (or vice
-    # versa) -> the polarity disagrees, penalize.
+    # versa) -> the polarity disagrees, penalize strongly.
     if best_idx >= 0:
         ctx_neg = any(
             t in _NEGATIONS for t in context_chunks[best_idx].lower().split()
         )
         if claim_neg != ctx_neg and best_support > 0.3:
-            support *= 0.5
+            # Polarity inversion is a semantic hallucination; cap support below
+            # the pass threshold regardless of lexical overlap.
+            support = min(support * 0.25, 0.15)
             reasons.append("negation/polarity mismatch with best-matching context")
 
     grounded = support >= threshold

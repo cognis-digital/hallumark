@@ -20,6 +20,12 @@ pip install "git+https://github.com/cognis-digital/hallumark.git"
 hallumark scan .            # → prioritized findings in seconds
 ```
 
+<!-- cognis:layman:start -->
+## What is this?
+
+HALLUMARK checks whether an AI assistant's answers are actually backed up by the source documents it was given. When AI systems retrieve documents to answer questions, they sometimes invent facts, use wrong numbers, or contradict the very text they retrieved — HALLUMARK catches these by comparing each claim in the answer against the retrieved context. You point it at a file of question-and-answer records, and it tells you which answers are faithfully grounded and which contain hallucinated details. It is aimed at developers and teams building or testing AI-powered search and question-answering products.
+<!-- cognis:layman:end -->
+
 ## Contents
 
 - [Why hallumark?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
@@ -47,6 +53,42 @@ LLM hallucination & grounding auditor for RAG systems — without standing up he
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="quick-start"></a>
+<!-- cognis:install:start -->
+## Install
+
+`hallumark` is source-available (not published to PyPI) — every method below installs
+straight from GitHub. Pick whichever you prefer; the one-line scripts auto-detect
+the best tool available on your machine.
+
+**One-liner (Linux / macOS):**
+```sh
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/hallumark/HEAD/install.sh | sh
+```
+
+**One-liner (Windows PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/cognis-digital/hallumark/HEAD/install.ps1 | iex
+```
+
+**Or install manually — any one of:**
+```sh
+pipx install "git+https://github.com/cognis-digital/hallumark.git"     # isolated (recommended)
+uv tool install "git+https://github.com/cognis-digital/hallumark.git"  # uv
+pip install "git+https://github.com/cognis-digital/hallumark.git"      # pip
+```
+
+**From source:**
+```sh
+git clone https://github.com/cognis-digital/hallumark.git
+cd hallumark && pip install .
+```
+
+Then run:
+```sh
+hallumark --help
+```
+<!-- cognis:install:end -->
+
 ## Quick start
 
 ```bash
