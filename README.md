@@ -20,6 +20,29 @@ pip install cognis-hallumark
 hallumark scan .            # → prioritized findings in seconds
 ```
 
+## Usage — step by step
+
+`hallumark` audits RAG records for ungrounded / hallucinated claims and reports
+grounding & faithfulness scores. Single subcommand: `audit`.
+
+```bash
+# 1. Install
+pip install -e .
+
+# 2. Audit a .json or .jsonl file of RAG records (- for stdin)
+hallumark audit records.jsonl
+
+# 3. Tune the gate: per-claim support threshold + minimum record faithfulness
+hallumark audit records.jsonl --threshold 0.3 --min-faithfulness 0.8 --show-grounded
+
+# 4. Read the result as JSON (per-record pass/fail + unsupported claims)
+hallumark audit records.jsonl --format json > hallumark.json
+
+# 5. CI / eval gate — fail when records fall below the faithfulness bar
+hallumark audit eval/records.jsonl --min-faithfulness 0.85 || exit 1
+```
+
+
 ## Contents
 
 - [Why hallumark?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
