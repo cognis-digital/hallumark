@@ -22,26 +22,37 @@ hallumark scan .            # → prioritized findings in seconds
 
 ## Usage — step by step
 
-`hallumark` audits RAG records for ungrounded / hallucinated claims and reports
-grounding & faithfulness scores. Single subcommand: `audit`.
+1. **Install:**
 
-```bash
-# 1. Install
-pip install -e .
+   ```bash
+   pip install hallumark
+   ```
 
-# 2. Audit a .json or .jsonl file of RAG records (- for stdin)
-hallumark audit records.jsonl
+2. **Audit RAG records** — each record is JSON/JSONL with `question`, `answer`, and `contexts` (the retrieved chunks). HALLUMARK checks whether each claim is grounded:
 
-# 3. Tune the gate: per-claim support threshold + minimum record faithfulness
-hallumark audit records.jsonl --threshold 0.3 --min-faithfulness 0.8 --show-grounded
+   ```bash
+   hallumark audit records.jsonl
+   ```
 
-# 4. Read the result as JSON (per-record pass/fail + unsupported claims)
-hallumark audit records.jsonl --format json > hallumark.json
+   You get per-record PASS/FAIL plus faithfulness, context-utilization, and answer-relevance scores.
 
-# 5. CI / eval gate — fail when records fall below the faithfulness bar
-hallumark audit eval/records.jsonl --min-faithfulness 0.85 || exit 1
-```
+3. **Read from stdin** with `-`:
 
+   ```bash
+   cat records.jsonl | hallumark audit -
+   ```
+
+4. **Tune the strictness** — per-claim support threshold and the minimum record faithfulness to PASS:
+
+   ```bash
+   hallumark audit records.json --threshold 0.35 --min-faithfulness 0.9 --show-grounded
+   ```
+
+5. **CI gate** — emit JSON and rely on the exit code (1 when unsupported/hallucinated claims are found):
+
+   ```bash
+   hallumark audit records.jsonl --format json | jq '.total_unsupported'
+   ```
 
 ## Contents
 
