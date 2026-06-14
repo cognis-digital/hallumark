@@ -36,3 +36,6 @@ hallumark = "hallumark.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["hallumark"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
