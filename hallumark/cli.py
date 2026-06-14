@@ -163,6 +163,24 @@ def main(argv: Optional[List[str]] = None) -> int:
         except FileNotFoundError:
             sys.stderr.write("error: input file not found: %s\n" % args.input)
             return 2
+        except IsADirectoryError:
+            sys.stderr.write(
+                "error: input path is a directory: %s\n" % args.input
+            )
+            return 2
+        except PermissionError:
+            sys.stderr.write(
+                "error: permission denied reading: %s\n" % args.input
+            )
+            return 2
+        except OSError as exc:
+            sys.stderr.write("error: could not open input: %s\n" % exc)
+            return 2
+        except UnicodeDecodeError as exc:
+            sys.stderr.write(
+                "error: input file is not valid UTF-8: %s\n" % exc.reason
+            )
+            return 2
         except (json.JSONDecodeError, ValueError) as exc:
             sys.stderr.write("error: could not parse input: %s\n" % exc)
             return 2

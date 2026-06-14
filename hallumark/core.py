@@ -208,7 +208,10 @@ def _score_claim(
             # claim's terms?) but Jaccard guards against trivial matches.
             local_best = max(local_best, 0.65 * cov + 0.35 * jac)
         # Coverage against the whole chunk catches multi-sentence support.
-        local_best = max(local_best, 0.5 * _overlap_coverage(claim_tokens, chunk_full_tokens))
+        local_best = max(
+            local_best,
+            0.5 * _overlap_coverage(claim_tokens, chunk_full_tokens),
+        )
         if local_best > best_support:
             best_support = local_best
             best_idx = idx
@@ -246,7 +249,8 @@ def _score_claim(
             # is always flagged as unsupported.
             support = min(support * 0.2, 0.15)
             reasons.append(
-                "numeric value(s) not found in context: " + ", ".join(sorted(set(missing)))
+                "numeric value(s) not found in context: "
+                + ", ".join(sorted(set(missing)))
             )
 
     # Negation flip: claim negates but best-matching context does not (or vice
@@ -295,7 +299,7 @@ def audit_record(
     contexts = record.get("contexts", record.get("context", []))
     if isinstance(contexts, str):
         contexts = [contexts]
-    contexts = [str(c) for c in contexts if str(c).strip()]
+    contexts = [c for c in contexts if isinstance(c, str) and c.strip()]
 
     claims = split_claims(answer)
     scored = [_score_claim(c, contexts, threshold) for c in claims]
@@ -305,7 +309,11 @@ def audit_record(
     n_unsupported = n_claims - n_grounded
     faithfulness = (n_grounded / n_claims) if n_claims else 1.0
 
-    used_idxs = {c.best_context_idx for c in scored if c.grounded and c.best_context_idx >= 0}
+    used_idxs = {
+        c.best_context_idx
+        for c in scored
+        if c.grounded and c.best_context_idx >= 0
+    }
     context_utilization = (len(used_idxs) / len(contexts)) if contexts else 0.0
 
     # Answer relevance: does the answer engage the question's content terms?
@@ -335,7 +343,11 @@ def audit_records(
     threshold: float = 0.3,
     pass_faithfulness: float = 0.8,
 ) -> AuditReport:
-    audits = [audit_record(r, threshold, pass_faithfulness) for r in records]
+    audits = [
+        audit_record(r, threshold, pass_faithfulness)
+        for r in records
+        if isinstance(r, dict)
+    ]
     n = len(audits)
     n_passed = sum(1 for a in audits if a.passed)
     total_claims = sum(a.n_claims for a in audits)
@@ -364,9 +376,22 @@ def audit_records(
 
 
 def load_records(path: str) -> List[Dict[str, Any]]:
-    """Load RAG records from a .json (list/object) or .jsonl file."""
-    with open(path, "r", encoding="utf-8") as fh:
-        text = fh.read()
+    """Load RAG records from a .json (list/object) or .jsonl file.
+
+    Raises:
+        FileNotFoundError: if *path* does not exist.
+        OSError: if the file cannot be read (permissions, directory, etc.).
+        UnicodeDecodeError: if the file is not valid UTF-8.
+        ValueError: if the content cannot be parsed as JSON/JSONL.
+    """
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            text = fh.read()
+    except UnicodeDecodeError as exc:
+        raise UnicodeDecodeError(
+            exc.encoding, exc.object, exc.start, exc.end,
+            "file %r is not valid UTF-8: %s" % (path, exc.reason),
+        ) from exc
     return parse_records(text)
 
 
@@ -388,11 +413,16 @@ def parse_records(text: str) -> List[Dict[str, Any]]:
         pass
     # Fall back to JSONL.
     records: List[Dict[str, Any]] = []
-    for line in text.splitlines():
+    for lineno, line in enumerate(text.splitlines(), start=1):
         line = line.strip()
         if not line:
             continue
-        obj = json.loads(line)
+        try:
+            obj = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise ValueError(
+                "malformed JSON on line %d: %s" % (lineno, exc)
+            ) from exc
         if isinstance(obj, dict):
             records.append(obj)
     return records
