@@ -20,6 +20,57 @@ pip install cognis-hallumark
 hallumark scan .            # → prioritized findings in seconds
 ```
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ hallumark-emit --version
+hallumark 0.1.0
+```
+
+```console
+$ hallumark-emit --help
+usage: hallumark [-h] [--version] <command> ...
+
+HALLUMARK - audit LLM/RAG answers for hallucinations by checking whether each
+claim is grounded in the retrieved context.
+
+positional arguments:
+  <command>
+    audit     Audit a file of RAG records for ungrounded / hallucinated
+              claims.
+
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit
+
+Input is JSON or JSONL where each record has: question, answer, and contexts
+(a list of retrieved chunks). Returns non-zero exit when unsupported claims
+are found.
+```
+
+> Blocks above are real `hallumark` output — reproduce them from a clone.
+
+**Sample result format** _(illustrative values — run on your own data for real findings):_
+
+```
+{
+"feed": {
+"type": "STIX",
+"value": "{\"indicator\":{\"id\":\"1234567890\",\"name\":\"Example Indicator\"},\"observed-data\":[{\"id\":\"1\",\"timestamp\":1643723400,\"data\":\"example data\"}]}"
+},
+"status": 200,
+"message": "Findings successfully forwarded to STIX platform"
+}
+
+{"indicator":{"id":"1234567890","name":"Example Indicator"},"observed-data":[{"id":"1","timestamp":1643723400,"data":"example data"}]}
+```
+
+<!-- cognis:example:end -->
+
 ## Usage — step by step
 
 1. **Install:**

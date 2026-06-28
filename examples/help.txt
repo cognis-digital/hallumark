@@ -1,0 +1,19 @@
+$ hallumark-emit --help
+
+usage: hallumark [-h] [--version] <command> ...
+
+HALLUMARK - audit LLM/RAG answers for hallucinations by checking whether each
+claim is grounded in the retrieved context.
+
+positional arguments:
+  <command>
+    audit     Audit a file of RAG records for ungrounded / hallucinated
+              claims.
+
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit
+
+Input is JSON or JSONL where each record has: question, answer, and contexts
+(a list of retrieved chunks). Returns non-zero exit when unsupported claims
+are found.
